@@ -1,0 +1,19 @@
+[package]
+name = "aoc2021"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+regex = "1.5"
+lazy_static = "1.4"
+#chrono = "0.4.19"
+arrayvec = "0.7"
+indoc = "1.0"
+
+[dev-dependencies]
+test-case = "2.0"
+#assert2 = "0.3.6"
+#pretty_assertions = "1.2"
+fluent-asserter = "0.1"
