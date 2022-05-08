@@ -7,7 +7,8 @@ fn main() {
 const WINDOW_SIZE: usize = 3;
 
 fn calibrate<S: AsRef<str>>(input: impl Iterator<Item=S>) -> i32 {
-    let numbers: Vec<i32> = input.map(|line| line.as_ref().parse::<i32>().unwrap()).collect();
+    let numbers: Vec<i32> = input.map(|line| line.as_ref().parse::<i32>()
+        .expect("Cannot parse number!")).collect();
     if numbers.len() < WINDOW_SIZE + 1 { panic!("Insufficient input!") }
     let mut size = 0;
     let mut amount = 0;
@@ -53,5 +54,11 @@ mod tests {
     fn calibrate_small() {
         let result = || calibrate("1\n2\n3".lines());
         assert_that_code!(result).panics().with_message("Insufficient input!")
+    }
+
+    #[test]
+    fn calibrate_non_number() {
+        let result = || calibrate("1\na\n3\n4".lines());
+        assert_that_code!(result).panics().with_having_message("Cannot parse number!")
     }
 }

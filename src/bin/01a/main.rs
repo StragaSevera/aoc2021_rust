@@ -10,7 +10,7 @@ fn calibrate<S: AsRef<str>>(input: impl Iterator<Item=S>) -> i32 {
         Full(i32, i32),
     }
 
-    let numbers = input.map(|line| line.as_ref().parse::<i32>().unwrap());
+    let numbers = input.map(|line| line.as_ref().parse::<i32>().expect("Cannot parse number!"));
     let result = numbers.fold(CalibrationAcc::Empty, |acc, current| {
         match acc {
             CalibrationAcc::Empty => CalibrationAcc::Full(current, 0),
@@ -55,5 +55,11 @@ mod tests {
     fn calibrate_empty() {
         let result = || calibrate("".lines());
         assert_that_code!(result).panics().with_message("Empty input!")
+    }
+
+    #[test]
+    fn calibrate_non_number() {
+        let result = || calibrate("1\na\n3\n4".lines());
+        assert_that_code!(result).panics().with_having_message("Cannot parse number!")
     }
 }
