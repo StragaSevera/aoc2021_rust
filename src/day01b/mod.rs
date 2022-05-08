@@ -1,5 +1,5 @@
 pub fn result() -> String {
-    let input = aoc2021::read_file("src/lesson01b/input.txt");
+    let input = aoc2021::read_file("src/day01b/input.txt");
     let result = calibrate(input);
     format!("{}", result)
 }
