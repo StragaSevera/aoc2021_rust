@@ -1,7 +1,7 @@
-fn main() {
-    let input = aoc2021::read_file("src/bin/01b/input.txt");
+pub fn result() -> String {
+    let input = aoc2021::read_file("src/lesson01b/input.txt");
     let result = calibrate(input);
-    println!("{}", result);
+    format!("{}", result)
 }
 
 const WINDOW_SIZE: usize = 3;

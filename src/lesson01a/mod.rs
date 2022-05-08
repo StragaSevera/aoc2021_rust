@@ -1,7 +1,7 @@
-fn main() {
-    let input = aoc2021::read_file("src/bin/01a/input.txt");
+pub fn result() -> String {
+    let input = aoc2021::read_file("src/lesson01a/input.txt");
     let result = calibrate(input);
-    println!("{}", result);
+    format!("{}", result)
 }
 
 fn calibrate<S: AsRef<str>>(input: impl Iterator<Item=S>) -> i32 {
