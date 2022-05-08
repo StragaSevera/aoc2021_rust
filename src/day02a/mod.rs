@@ -1,19 +1,45 @@
 pub fn result() -> String {
     let input = aoc2021::read_file("src/day02a/input.txt");
-    let result = calibrate(input);
+    let result = plot_course(input);
     let product = result.x * result.y;
     format!("x: {}, y: {}, product: {}", result.x, result.y, product)
 }
 
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Debug)]
 struct Coords {
     x: i32,
     y: i32,
 }
 
-fn calibrate<S: AsRef<str>>(input: impl Iterator<Item=S>) -> Coords {
-    let numbers = input.map(|line| line.as_ref().parse::<i32>().expect("Cannot parse number!"));
-    todo!()
+struct Command {
+    direction: String,
+    amount: i32,
+}
+
+impl Command {
+    fn new<'a>(mut parts: impl Iterator<Item=&'a str>) -> Command {
+        let direction = parts.next().expect("Need to provide direction!").to_string();
+        let amount = parts.next().expect("Need to provide amount!")
+            .parse::<i32>().expect("The amount must be an integer number!");
+        if parts.next().is_some() { panic!("A line should contain of two items!") }
+        Command { direction, amount }
+    }
+}
+
+fn plot_course<S: AsRef<str>>(input: impl Iterator<Item=S>) -> Coords {
+    let commands = input.map(|line| Command::new(line.as_ref().split_whitespace()));
+    let mut coords = Coords { x: 0, y: 0 };
+
+    for command in commands {
+        match command.direction.as_str() {
+            "forward" => coords.x += command.amount,
+            "down" => coords.y += command.amount,
+            "up" => coords.y -= command.amount,
+            s => panic!("Wrong direction: {}", s)
+        }
+    }
+
+    coords
 }
 
 #[cfg(test)]
@@ -33,19 +59,7 @@ mod tests {
 
     #[test]
     fn calibrate_correct() {
-        let result = calibrate(INPUT.lines());
-        assert_that!(result).is_equal_to(Coords {x = 15, y = 10});
-    }
-
-    #[test]
-    fn calibrate_empty() {
-        let result = || calibrate("".lines());
-        assert_that_code!(result).panics().with_message("Empty input!")
-    }
-
-    #[test]
-    fn calibrate_non_number() {
-        let result = || calibrate("1\na\n3\n4".lines());
-        assert_that_code!(result).panics().with_having_message("Cannot parse number!")
+        let result = plot_course(INPUT.lines());
+        assert_that!(result).is_equal_to(Coords { x: 15, y: 10 });
     }
 }

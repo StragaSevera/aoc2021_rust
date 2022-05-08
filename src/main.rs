@@ -5,7 +5,7 @@ fn main() {
     let result = match day.as_str() {
         "01a" => day01a::result(),
         "01b" => day01b::result(),
-        "02a" => day01b::result(),
+        "02a" => day02a::result(),
         _ => panic!("The day number should be a valid implemented day with two digits with suffix specifying 'a' or 'b'!")
     };
     println!("Result for day {}: {}", day, result);
