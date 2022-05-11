@@ -7,6 +7,7 @@ fn main() {
         "01b" => day01b::result(),
         "02a" => day02a::result(),
         "02b" => day02b::result(),
+        "03a" => day03a::result(),
         _ => panic!("The day number should be a valid implemented day with two digits with suffix specifying 'a' or 'b'!")
     };
     println!("Result for day {}: {}", day, result);
@@ -16,3 +17,4 @@ mod day01a;
 mod day01b;
 mod day02a;
 mod day02b;
+mod day03a;
